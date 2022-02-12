@@ -1,4 +1,4 @@
 # Study-Projects
-Just some studying projects.
+Little Project starting CSS
 
 <img src="/Little Project/IMG/LITTLE.png">
