@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("/IMG/SL-043021-42650-28.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    padding: 1%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    background: rgba(50, 50, 255, 0.09);
+    backdrop-filter: blur(5px);
+    align-items: center;
+}
+
+.blonde {
+    width: 40%;
+    height: 40%;
+    margin-top: 7%;
+    margin-right: 5%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px black;
+    margin-left: 7%;
+    filter: opacity(90%);
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.corpo {
+    padding: 10%;
+    background: rgba(50, 50, 255, 0.09);
+    backdrop-filter: blur(5px);
+    font-size: 15px;
+    max-width: 30%;
+    height: 376px;
+    
+
+}
