@@ -1,2 +1,2 @@
 ## SOLUTION-PAGE 
-<img src="Study-Projects\Solution\solution-page.png">
+<img src="/STUDY-PROJECTS/Solution/solution-page.png">
