@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.bg-image {
+    background-color: #333;
+    color: white;
+    padding: 10%;
+    text-align: center;
+}
+
+.wel-text h1 {
+    margin-bottom: 3%;
+    font-size: 2.2rem;
+}
+
+.bg-image p {
+    font-size: 1.1rem;
+}
+
+.bg-image button {
+    color: white;
+    font-size: 1.1rem;
+    padding: 2%;
+    margin-top: 3%;
+    border: 1px solid gray;
+    background-color: #333;
+}
+
+.web-aplication {
+    text-align: center;
+    padding: 5%;
+}
+
+.web-aplication-text {
+    display: grid;
+    gap: 5%;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+}
+
+.cards-background {
+    background-color: #333;
+    border: 1px #b3b3b3;
+    padding: 8%;
+}
+.banners{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0% 8% 0% 8%;
+}
+.banners img{
+    width: 100%;
+    margin-right: 5%;
+}
+.web-development{
+    margin-right: 5%;
+    background-color: white;
+}
+.mobile-app{
+    margin-right: 5%;
+    background-color: white;
+}
+.tech-marketing{
+    margin-right: 5%;
+    background-color: white;
+}
+.banners p,h2{
+    padding: 8%;
+    text-align: center;
+    padding-bottom: 19%;
+}
+
+
+.we-handle-text {
+    text-align: center;
+    padding: 5%;
+    color: black;
+}
+
+.we-handle-text p {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+}
+
+.both {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    color: #ffff;
+}
+
+.both h2 {
+    margin-bottom: 5%;
+}
+
+.contact-us {
+    background-color: #2690D4;
+    padding: 10%;
+
+}
+
+.about {
+    background-color: #333;
+    padding: 10%;
+}
+
+.email {
+    margin-top: 5%;
+}
+
+.footer {
+    background-color: black;
+    color: #ffff;
+    padding: 3%;
+}
+
+.footer-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+}
