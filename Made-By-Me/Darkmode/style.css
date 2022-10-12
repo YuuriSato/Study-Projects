@@ -1,0 +1,29 @@
+body {
+    padding: 25px;
+    background-color: white;
+    color: black;
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+
+.img {
+    padding-left: auto;
+    padding-right: auto;
+    padding-bottom: 50px;
+    padding-top: 25px;
+   
+    
+}
+
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
+    font-family: Monospace;
+}
