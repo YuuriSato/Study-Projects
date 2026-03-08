@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("https://images.unsplash.com/photo-1503455637927-730bce8583c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.heart {
+  --c: red;
+  width: 200px;
+  aspect-ratio: 1;
+  background: radial-gradient(at 70% 31%, var(--c) 29%, #0000 30%),
+    radial-gradient(at 30% 31%, var(--c) 29%, #0000 30%),
+    conic-gradient(from -45deg at 50% 84%, var(--c) 90deg, #0000 0) bottom/100%
+      50% no-repeat;
+}
+
+.card {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform-origin: top;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+img {
+  border-radius: 8px;
+}
+
+.card-content {
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card.open {
+  transform: rotateX(0deg);
+}
+
+.card.open .card-content {
+  opacity: 1;
+}
+
+.cord-wrapper {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 200px;
+  cursor: grab;
+}
+
+.plug {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 60px;
+  fill: #fe3a65;
+  cursor: grab;
+  transform: translateY(140px);
+  transform-origin: 50% 0%;
+  z-index: 20;
+}
+
+.plug:active {
+  cursor: grabbing;
+}
+
+.ribbon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 8px;
+  height: 100%;
+  transform-origin: top;
+  transform: translateX(-50%);
+}
+
+.valentine-text {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fe3a65;
+}
+
+h1 {
+  font-size: 32px;
+  color: #fe3a65;
+  margin-bottom: 20px;
+}
+
+.valentine-congrats h1,
+.valentine-sad h1 {
+  margin-bottom: 0px;
+}
+
+.please,
+.congrats,
+.sad {
+  width: 280px;
+  height: 100px;
+  /* height: 50px; */
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 130px;
+  transition: transform 0.2s ease;
+}
+
+.buttons button.yes {
+  background-color: #4caf50;
+  color: white;
+}
+
+.buttons button.no {
+  background-color: #f44336;
+  color: white;
+}
+.text-intro {
+  color: black;
+  position: absolute;
+  bottom: -40px;
+  font-size: 20px;
+  text-transform: capitalize;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.footer-text {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: white;
+}

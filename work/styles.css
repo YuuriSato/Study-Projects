@@ -1,0 +1,91 @@
+/* Complementary styles kept separate from HTML */
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+body.dark-mode {
+  background: #000000 !important;
+  color: #e2e8f0;
+}
+
+body.dark-mode aside,
+body.dark-mode section,
+body.dark-mode article,
+body.dark-mode #user-panel,
+body.dark-mode #modal-layer > div,
+body.dark-mode #auth-modal-layer > div {
+  background-color: #000000 !important;
+  border-color: #857c00 !important;
+  color: #b68707 !important;
+}
+
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode span,
+body.dark-mode th,
+body.dark-mode td,
+body.dark-mode label {
+  color: #b68707 !important;
+}
+
+body.dark-mode .text-slate-500,
+body.dark-mode .text-slate-600,
+body.dark-mode .text-slate-700,
+body.dark-mode .text-slate-800 {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea,
+body.dark-mode button {
+  border-color: #475569 !important;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+#app-shell.auth-locked {
+  filter: blur(1.5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Better print output for PDF export */
+@media print {
+  aside,
+  #floating-add,
+  #auth-modal-layer,
+  #modal-layer,
+  #export-pdf,
+  #export-csv,
+  #new-from-table,
+  #new-from-dashboard,
+  #go-computers,
+  #import-csv-input,
+  label[for="import-csv-input"] {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  body {
+    background: #ce0c0c !important;
+  }
+}

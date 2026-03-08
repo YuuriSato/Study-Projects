@@ -1,0 +1,342 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Computadores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwind-config.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="min-h-screen bg-slate-100 text-slate-900">
+    <div id="app-shell" class="min-h-screen lg:flex">
+      <aside class="w-full border-b border-slate-200 bg-white lg:flex lg:min-h-screen lg:w-72 lg:flex-col lg:border-b-0 lg:border-r">
+        <div class="px-6 py-6 border-b border-slate-200">
+          <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">Okta7Inventario</h2>
+        </div>
+        <nav class="space-y-1 px-3 pb-6">
+          <button data-nav="dashboard" class="nav-btn flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-100">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
+            Dashboard
+          </button>
+          <button data-nav="computadores" class="nav-btn flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-100">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h7v7H4V6zm9 0h7v7h-7V6zM4 15h7v3H4v-3zm9 0h7v3h-7v-3z" />
+            </svg>
+            Computadores
+          </button>
+          <button data-nav="emails" class="nav-btn flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-100">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16v12H4V6zm1.6 1.4L12 12l6.4-4.6" />
+            </svg>
+            Email Corporativo
+          </button>
+        </nav>
+        <div id="user-panel" class="border-t border-slate-200 px-4 py-4 lg:mt-auto">
+          <p class="text-xs uppercase tracking-wide text-slate-500">Usuário</p>
+          <p id="user-email" class="mt-1 truncate text-sm font-semibold text-slate-800">Não autenticado</p>
+          <button id="theme-toggle" class="mt-3 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">Modo Escuro</button>
+          <button id="logout-btn" class="mt-3 w-full rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">Sair</button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+        <section id="view-dashboard" class="space-y-6">
+          <header class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 class="text-4xl font-extrabold tracking-tight">Dashboard</h1>
+              <p class="mt-1 text-lg text-slate-600">Visão geral do inventário de computadores</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button id="go-computers" class="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold hover:bg-slate-50">Ver Computadores</button>
+              <button id="new-from-dashboard" class="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-soft hover:bg-brand-600">+ Novo Computador</button>
+            </div>
+          </header>
+
+          <div class="grid grid-cols-1 gap-4 xl:grid-cols-4">
+            <article class="rounded-2xl border-l-4 border-l-blue-500 bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p class="text-sm font-semibold text-slate-600">Total de Computadores</p>
+              <p id="metric-total" class="mt-5 text-5xl font-extrabold">0</p>
+              <p class="mt-2 text-sm text-slate-500">Equipamentos cadastrados</p>
+            </article>
+            <article class="rounded-2xl border-l-4 border-l-emerald-500 bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p class="text-sm font-semibold text-slate-600">Garantias Ativas</p>
+              <p id="metric-active" class="mt-5 text-5xl font-extrabold text-emerald-600">0</p>
+              <p class="mt-2 text-sm text-slate-500">Em período de cobertura</p>
+            </article>
+            <article class="rounded-2xl border-l-4 border-l-amber-500 bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p class="text-sm font-semibold text-slate-600">Próximas do Vencimento</p>
+              <p id="metric-soon" class="mt-5 text-5xl font-extrabold text-amber-600">0</p>
+              <p class="mt-2 text-sm text-slate-500">Até 30 dias</p>
+            </article>
+            <article class="rounded-2xl border-l-4 border-l-rose-500 bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p class="text-sm font-semibold text-slate-600">Garantias Vencidas</p>
+              <p id="metric-expired" class="mt-5 text-5xl font-extrabold text-rose-600">0</p>
+              <p class="mt-2 text-sm text-slate-500">Sem cobertura</p>
+            </article>
+          </div>
+
+          <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <h3 class="text-2xl font-bold">Configurações Mais Comuns</h3>
+            <p class="mt-1 text-slate-500">Distribuição de especificações técnicas</p>
+            <div id="common-specs" class="mt-6 space-y-4"></div>
+          </section>
+        </section>
+
+        <section id="view-computadores" class="hidden space-y-6">
+          <header class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 class="text-4xl font-extrabold tracking-tight">Computadores</h1>
+              <p class="mt-1 text-lg text-slate-600">Gerenciamento de inventário</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button id="export-pdf" class="rounded-xl border border-fuchsia-300 bg-fuchsia-50 px-4 py-2.5 text-sm font-semibold text-fuchsia-700 hover:bg-fuchsia-100">Exportar PDF</button>
+              <button id="export-csv" class="rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-100">Exportar</button>
+              <label for="import-csv-input" class="cursor-pointer rounded-xl border border-blue-300 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 hover:bg-blue-100">Importar CSV</label>
+              <input id="import-csv-input" type="file" accept=".csv,text/csv" class="hidden" />
+              <button id="new-from-table" class="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-soft hover:bg-brand-600">+ Novo Computador</button>
+            </div>
+          </header>
+
+          <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <h2 class="text-2xl font-bold">Filtros</h2>
+            <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-[1fr_220px]">
+              <label class="space-y-2 text-sm font-medium text-slate-700">
+                <span>Buscar por série, dono, CPU ou RAM</span>
+                <input id="filter-search" type="search" placeholder="Digite para buscar..." class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+              <label class="space-y-2 text-sm font-medium text-slate-700">
+                <span>Status de Garantia</span>
+                <select id="filter-status" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                  <option value="todos">Todos</option>
+                  <option value="ativa">Ativa</option>
+                  <option value="proxima">Próxima do vencimento</option>
+                  <option value="vencida">Vencida</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <h2 class="text-2xl font-bold">Lista de Computadores</h2>
+            <p id="table-count" class="mt-1 text-slate-500">0 computador(es) encontrado(s)</p>
+
+            <div class="mt-6 overflow-x-auto">
+              <table class="min-w-full border-collapse">
+                <thead class="border-b border-slate-200 text-left text-sm font-semibold text-slate-600">
+                  <tr>
+                    <th class="px-4 py-3">Série</th>
+                    <th class="px-4 py-3">Dono</th>
+                    <th class="px-4 py-3">Email Corporativo</th>
+                    <th class="px-4 py-3">Máquina</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Specs</th>
+                    <th class="px-4 py-3">Garantia</th>
+                    <th class="px-4 py-3 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y divide-slate-200 text-sm"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section id="view-emails" class="hidden space-y-6">
+          <header>
+            <h1 class="text-4xl font-extrabold tracking-tight">Email Corporativo</h1>
+            <p class="mt-1 text-lg text-slate-600">Cadastre e gerencie os emails corporativos da empresa</p>
+          </header>
+
+          <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <h2 class="text-2xl font-bold">Adicionar email</h2>
+            <form id="corporate-email-form" class="mt-4 flex flex-col gap-3 sm:flex-row">
+              <input id="corporate-email-input" type="email" required placeholder="exemplo@empresa.com" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              <button type="submit" class="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600">Adicionar</button>
+            </form>
+            <p id="corporate-email-feedback" class="mt-3 hidden text-sm"></p>
+          </section>
+
+          <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <h2 class="text-2xl font-bold">Lista de emails</h2>
+            <p id="corporate-email-count" class="mt-1 text-slate-500">0 email(s) cadastrado(s)</p>
+            <div class="mt-5 overflow-x-auto">
+              <table class="min-w-full border-collapse">
+                <thead class="border-b border-slate-200 text-left text-sm font-semibold text-slate-600">
+                  <tr>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Máquinas Vinculadas</th>
+                    <th class="px-4 py-3">Data de cadastro</th>
+                    <th class="px-4 py-3 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="corporate-email-table-body" class="divide-y divide-slate-200 text-sm"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <button id="floating-add" class="fixed bottom-6 right-6 rounded-full bg-brand-500 p-4 text-white shadow-lg shadow-blue-400/30 hover:bg-brand-600" aria-label="Novo computador">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+    </button>
+
+    <div id="auth-modal-layer" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-900/55 p-4">
+      <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-slate-200">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold">Acesso ao Sistema</h2>
+          <p class="mt-1 text-sm text-slate-600">Entre ou crie sua conta para gerenciar os computadores.</p>
+        </div>
+
+        <div class="mb-5 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+          <button id="tab-login" class="rounded-lg px-3 py-2 text-sm font-semibold">Entrar</button>
+          <button id="tab-register" class="rounded-lg px-3 py-2 text-sm font-semibold">Cadastrar</button>
+        </div>
+
+        <p id="auth-error" class="mb-4 hidden rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700"></p>
+
+        <form id="login-form" class="space-y-4">
+          <label class="block text-sm font-medium text-slate-700">
+            Email
+            <input name="email" type="email" required class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+          </label>
+          <label class="block text-sm font-medium text-slate-700">
+            Senha
+            <input name="password" type="password" minlength="6" required class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+          </label>
+          <button type="submit" class="w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600">Entrar</button>
+        </form>
+
+        <form id="register-form" class="hidden space-y-4">
+          <label class="block text-sm font-medium text-slate-700">
+            Email
+            <input name="email" type="email" required class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+          </label>
+          <label class="block text-sm font-medium text-slate-700">
+            Senha
+            <input name="password" type="password" minlength="6" required class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+          </label>
+          <button type="submit" class="w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600">Cadastrar e Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-layer" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/45 p-4">
+      <div class="w-full max-w-3xl rounded-2xl bg-white p-6 shadow-xl max-h-[92vh] overflow-y-auto">
+        <div class="flex items-center justify-between">
+          <h3 id="modal-title" class="text-4xl font-bold tracking-tight">Adicionar Novo Computador</h3>
+          <button id="close-modal" class="rounded-lg p-2 hover:bg-slate-100" aria-label="Fechar">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <p class="mt-2 text-lg text-slate-500">Preencha os dados do computador para adicioná-lo ao inventário</p>
+
+        <form id="computer-form" class="mt-6 space-y-6">
+          <section class="space-y-4">
+            <h4 class="text-2xl font-bold">Informações Gerais</h4>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Número de Série *</span>
+              <input name="serial" required placeholder="Ex: ABC123456" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+            </label>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Dono *</span>
+                <input name="owner" required placeholder="Ex: João Silva" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Máquina/Modelo *</span>
+                <input name="machine" required placeholder="Ex: Dell XPS 15" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+            </div>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Status *</span>
+              <select name="deviceStatus" required class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+                <option value="pendente">Pendente</option>
+              </select>
+            </label>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Email Corporativo</span>
+              <select name="corporateEmail" id="computer-corporate-email" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                <option value="">Sem vínculo</option>
+              </select>
+            </label>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Data de Compra *</span>
+                <input name="purchaseDate" type="date" required class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Tempo de Garantia (meses) *</span>
+                <input name="warrantyMonths" type="number" min="0" required placeholder="Ex: 12" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+            </div>
+          </section>
+
+          <hr class="border-slate-200" />
+
+          <section class="space-y-4">
+            <h4 class="text-2xl font-bold">Especificações Técnicas</h4>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Processador (CPU) *</span>
+              <input name="cpu" required placeholder="Ex: Intel Core i7-13700K" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+            </label>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Memória (RAM) *</span>
+                <input name="ram" required placeholder="Ex: 32GB DDR5" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Placa de Vídeo (GPU)</span>
+                <input name="gpu" placeholder="Ex: NVIDIA RTX 4070" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+            </div>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Armazenamento *</span>
+                <input name="storage" required placeholder="Ex: 1TB" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+              </label>
+              <label class="space-y-1 text-sm">
+                <span class="font-semibold text-slate-700">Tipo de Armazenamento</span>
+                <select name="storageType" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                  <option value="SSD">SSD</option>
+                  <option value="HDD">HDD</option>
+                  <option value="NVMe">NVMe</option>
+                  <option value="Híbrido">Híbrido</option>
+                </select>
+              </label>
+            </div>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Sistema Operacional</span>
+              <input name="os" placeholder="Ex: Windows 11 Pro" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+            </label>
+          </section>
+
+          <hr class="border-slate-200" />
+
+          <section class="space-y-4">
+            <h4 class="text-2xl font-bold">Observações</h4>
+            <label class="space-y-1 text-sm block">
+              <span class="font-semibold text-slate-700">Notas adicionais</span>
+              <textarea name="notes" rows="3" placeholder="Adicione qualquer informação relevante..." class="w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"></textarea>
+            </label>
+          </section>
+
+          <div class="flex flex-wrap justify-end gap-3 pt-2">
+            <button type="button" id="cancel-modal" class="rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold hover:bg-slate-100">Cancelar</button>
+            <button type="submit" class="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600">Salvar computador</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
